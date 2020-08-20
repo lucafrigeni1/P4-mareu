@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Mareu</string>
+    <string name="add_meeting_title">CREATION D\'UNE NOUVELLE REUNION</string>
+    <string name="sujet_hint">Sujet de la réunion</string>
+    <string name="mail_hint">prénom.nom</string>
+    <string name="horaire_text">Horaire de la réunion</string>
+    <string name="date_text">Date de la réunion</string>
+    <string name="salle_hint">N° de la salle</string>
+    <string-array name="room_spinner">
+        <item>salle 1</item>
+        <item>salle 2</item>
+        <item>salle 3</item>
+        <item>salle 4</item>
+        <item>salle 5</item>
+        <item>salle 6</item>
+        <item>salle 7</item>
+        <item>salle 8</item>
+        <item>salle 9</item>
+        <item>salle 10</item>
+    </string-array>
+    <string-array name="mail_spinner">
+        <item>Maxime@lamezone.com</item>
+        <item>Jean@lamezone.com</item>
+        <item>Elise@lamezone.com</item>
+        <item>Lucie@lamezone.com</item>
+        <item>Eric@lamezone.com</item>
+    </string-array>
+</resources>
