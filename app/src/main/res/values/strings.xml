@@ -3,10 +3,14 @@
     <string name="add_meeting_title">CREATION D\'UNE NOUVELLE REUNION</string>
     <string name="sujet_hint">Sujet de la réunion</string>
     <string name="mail_hint">prénom.nom</string>
-    <string name="horaire_text">Horaire de la réunion</string>
+    <string name="horaire_start_text">Début de la réunion</string>
+    <string name="horaire_end_text">Fin de la réunion</string>
     <string name="date_text">Date de la réunion</string>
     <string name="salle_hint">N° de la salle</string>
+    <string name="Participants">Participants :</string>
+    <string name="Date">Date :</string>
     <string-array name="room_spinner">
+        <item>Séléctionner une salle</item>
         <item>salle 1</item>
         <item>salle 2</item>
         <item>salle 3</item>
@@ -19,6 +23,7 @@
         <item>salle 10</item>
     </string-array>
     <string-array name="mail_spinner">
+        <item>Séléctionner un mail</item>
         <item>Maxime@lamezone.com</item>
         <item>Jean@lamezone.com</item>
         <item>Elise@lamezone.com</item>

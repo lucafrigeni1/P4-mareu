@@ -3,6 +3,7 @@ package com.example.mareu.service;
 public abstract class RoomGenerator {
 
     public static String[] ROOM_LIST = {
+            "Séléctionner une salle",
             "Salle 1",
             "Salle 2",
             "Salle 3",

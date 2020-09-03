@@ -25,6 +25,7 @@ public class ListMeetingActivity extends AppCompatActivity {
         findview();
         fragmentContainer();
         setAddMeetingFab();
+        setFilterBtn();
     }
 
     private void findview(){
@@ -43,6 +44,15 @@ public class ListMeetingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ListMeetingActivity.this,AddMeetingActivity.class));
+            }
+        });
+    }
+
+    private void setFilterBtn(){
+        filterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }

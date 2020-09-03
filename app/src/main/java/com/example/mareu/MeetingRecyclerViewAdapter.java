@@ -1,5 +1,8 @@
 package com.example.mareu;
 
+import android.content.Intent;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +11,15 @@ import android.widget.TextView;
 import com.example.mareu.Event.DeleteMeetingEvent;
 import com.example.mareu.model.Meeting;
 import org.greenrobot.eventbus.EventBus;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+
+import static androidx.core.content.ContextCompat.startActivity;
 
 public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecyclerViewAdapter.ViewHolder> {
 
@@ -27,13 +37,32 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Meeting meeting = mMeetings.get(position);
-        holder.mContext.setText(meeting.getContext());
+
+        String pattern = "HH:mm";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String startHour = simpleDateFormat.format(meeting.getStartTime());
+        String endHour = simpleDateFormat.format(meeting.getEndTime());
+
+        Log.e("RecyclerV", meeting.getStartTime().toString());
+
+        holder.mStartingTime.setText(startHour);
+        holder.mEndingTime.setText(endHour);
+        holder.mDate.setText(meeting.getDate());
+        holder.mRoom.setText(meeting.getRoom());
         holder.mTopic.setText(meeting.getTopic());
         holder.mMail.setText(meeting.getMail());
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
+            }
+        });
+        holder.mMeetingFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), DetailMeeting.class);
+                intent.putExtra("Meeting", (Parcelable) meeting);
+                v.getContext().startActivity(intent);
             }
         });
     }
@@ -44,17 +73,25 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView mContext;
+        public TextView mStartingTime;
+        public TextView mEndingTime;
+        public TextView mDate;
+        public TextView mRoom;
         public TextView mTopic;
         public TextView mMail;
         public ImageButton mDeleteButton;
+        public ConstraintLayout mMeetingFragment;
 
         public ViewHolder(View view) {
             super(view);
-            mContext = view.findViewById(R.id.context_text);
+            mStartingTime = view.findViewById(R.id.start_text);
+            mEndingTime = view.findViewById(R.id.end_text);
+            mDate = view.findViewById(R.id.date_text);
+            mRoom = view.findViewById(R.id.room_text);
             mTopic = view.findViewById(R.id.topic_text);
             mMail = view.findViewById(R.id.user_mail_text);
             mDeleteButton = view.findViewById(R.id.delete_button);
+            mMeetingFragment = view.findViewById(R.id.fragment_layout);
         }
     }
 }
