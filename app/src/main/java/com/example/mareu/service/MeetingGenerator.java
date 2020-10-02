@@ -19,7 +19,7 @@ public abstract class MeetingGenerator {
     private static final Date endHours = new Date(2020,1,1,14,0,0);
 
     public static List<Meeting> MEETING = Arrays.asList(
-            new Meeting("Réunion Demo",startHours,endHours,"2/10/2020","Salle 1",mail)
+            new Meeting("Réunion Demo",startHours,endHours,"1/1/2020","Salle 1",mail)
     );
 
     static List<Meeting> generateMeeting() {
