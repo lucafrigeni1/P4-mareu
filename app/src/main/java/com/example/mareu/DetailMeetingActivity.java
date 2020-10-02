@@ -7,16 +7,22 @@ import android.widget.TextView;
 
 import com.example.mareu.model.Meeting;
 
-import androidx.appcompat.app.AppCompatActivity;
+import java.util.List;
 
-public class DetailMeeting extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class DetailMeetingActivity extends AppCompatActivity {
 
     private TextView topic;
-    private TextView participants;
+    private RecyclerView participants;
     private TextView date;
     private TextView room;
     private ImageButton bReturn;
     private Meeting mMeeting;
+
+    DetailRecyclerViewAdapter detailAdapter;
+    List<String> detailMailList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +36,9 @@ public class DetailMeeting extends AppCompatActivity {
     }
 
     private void findview(){
-        topic = findViewById(R.id.topic_text);
-        participants = findViewById(R.id.mail_text_2);
-        date = findViewById(R.id.date_text_2);
+        topic = findViewById(R.id.detail_topic_text);
+        participants = findViewById(R.id.detail_mail_list);
+        date = findViewById(R.id.date_text);
         room = findViewById(R.id.room_detail_text);
         bReturn = findViewById(R.id.back_btn);
     }
@@ -43,9 +49,15 @@ public class DetailMeeting extends AppCompatActivity {
 
     private void meetingInformations(){
         topic.setText(mMeeting.getTopic());
-        participants.setText(mMeeting.getMail());
-        date.setText(mMeeting.getDate() + " " + mMeeting.getStartTime() + "-" + mMeeting.getEndTime());
+        date.setText(mMeeting.getDate() + " " + mMeeting.getConvertStartTime() + "-" + mMeeting.getConvertEndTime());
         room.setText(mMeeting.getRoom());
+        setDetailAdapter();
+    }
+
+    private void setDetailAdapter(){
+        detailMailList = mMeeting.getMail();
+        detailAdapter = new DetailRecyclerViewAdapter(detailMailList);
+        participants.setAdapter(detailAdapter);
     }
 
     private void setbReturn(){

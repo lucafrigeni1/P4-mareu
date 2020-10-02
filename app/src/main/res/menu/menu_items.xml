@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/date_filter"
+        android:title="@string/filtrer_par_date" />
+
+    <item
+        android:id="@+id/room_filter"
+        android:title="@string/filtrer_par_salle">
+
+        <menu>
+            <item android:title="@string/salle_1"
+                android:id="@+id/room_1">
+            </item>
+            <item android:title="@string/salle_2"
+                android:id="@+id/room_2">
+            </item>
+            <item android:title="@string/salle_3"
+                android:id="@+id/room_3">
+            </item>
+            <item android:title="@string/salle_4"
+                android:id="@+id/room_4">
+            </item>
+            <item android:title="@string/salle_5"
+                android:id="@+id/room_5">
+            </item>
+            <item android:title="@string/salle_6"
+                android:id="@+id/room_6">
+            </item>
+            <item android:title="@string/salle_7"
+                android:id="@+id/room_7">
+            </item>
+            <item android:title="@string/salle_8"
+                android:id="@+id/room_8">
+            </item>
+            <item android:title="@string/salle_9"
+                android:id="@+id/room_9">
+            </item>
+            <item android:title="@string/salle_10"
+                android:id="@+id/room_10">
+            </item>
+        </menu>
+    </item>
+</menu>

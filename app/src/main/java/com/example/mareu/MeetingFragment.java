@@ -51,7 +51,11 @@ public class MeetingFragment extends Fragment {
 
     private void initList() {
         mMeeting = mApiService.getMeetings();
-        Log.d("initList: ", "" + mMeeting.size());
+        mRecyclerView.setAdapter(new MeetingRecyclerViewAdapter(mMeeting));
+    }
+
+    public void setFilteredList(List<Meeting> filteredList){
+        mMeeting = filteredList;
         mRecyclerView.setAdapter(new MeetingRecyclerViewAdapter(mMeeting));
     }
 
@@ -74,13 +78,7 @@ public class MeetingFragment extends Fragment {
     }
 
     @Subscribe
-    public void onDeleteNeighbour(DeleteMeetingEvent event) {
-        mApiService.deleteMeeting(event.meeting);
-        initList();
-    }
-
-    @Subscribe
-    public void onDeleteFavoriteNeighbour(DeleteMeetingEvent event) {
+    public void onDeleteMeeting(DeleteMeetingEvent event) {
         mApiService.deleteMeeting(event.meeting);
         initList();
     }

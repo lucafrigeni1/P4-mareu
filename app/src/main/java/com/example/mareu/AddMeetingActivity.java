@@ -19,8 +19,10 @@ import com.example.mareu.DI.DI;
 import com.example.mareu.model.Meeting;
 import com.example.mareu.service.ApiService;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,7 +43,7 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
     ImageButton Validbtn;
     ImageButton addMailBtn;
     Spinner addRoom;
-    Spinner addMail;
+    EditText addMail;
     EditText addTopic;
     Calendar beginCalendar = Calendar.getInstance();
     Calendar endCalendar = Calendar.getInstance();
@@ -49,12 +51,15 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
     Date time2;
     String date;
     String room;
-    String mail;
 
     private Meeting meeting;
     private ApiService mApiService;
 
     RecyclerView mailRW;
+    MailRecyclerViewAdapter mailAdapter;
+    List<String> mailList;
+    String mailItem;
+    boolean mailIsExisting = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +70,11 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
 
         findview();
         setAddRoom();
-        setAddMail();
         setAddMailBtn();
         setAddDate();
         setAddStartHour();
         setAddEndHour();
+        initListMail();
         addMeeting();
     }
 
@@ -79,8 +84,9 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
         addDate = findViewById(R.id.date_btn);
         addRoom = findViewById(R.id.room_spinner);
         addTopic = findViewById(R.id.topic_edit);
-        addMail = findViewById(R.id.mail_spinner);
+        addMail = findViewById(R.id.mail_edit);
         addMailBtn = findViewById(R.id.add_mail_btn);
+        mailRW = findViewById(R.id.list_mail);
         Validbtn = findViewById(R.id.valid_button);
     }
 
@@ -91,7 +97,7 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
         meeting.setEndTime(time2);
         meeting.setDate(date);
         meeting.setRoom(room);
-        meeting.setMail(mail);
+        meeting.setMail(mailList);
     }
 
     private void addMeeting() {
@@ -101,16 +107,19 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
                 setMeeting();
                 if (meeting.getTopic().equals("")
                         || meeting.getRoom().equals("Séléctionner une salle")
-                        || meeting.getMail().equals("Séléctionner une adresse mail")
+                        || meeting.getMail().equals("")
                         || meeting.getStartTime() == null
                         || meeting.getEndTime() == null
-                        || meeting.getDate() == null)
+                        || meeting.getDate() == null) {
                     Toast.makeText(AddMeetingActivity.this, "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
-                else {
-                    availability();
-                    if (meeting.isAvailable())
+                } else {
+                    mApiService.meetingAvailability(meeting);
+                    if (meeting.isAvailable()) {
                         mApiService.addMeeting(meeting);
-                    finish();
+                        finish();
+                    } else {
+                        Toast.makeText(AddMeetingActivity.this, "Salle déja occupée pour cet horaire", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
@@ -131,7 +140,8 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
                         beginCalendar.set(MINUTE, minute);
                         beginCalendar.set(SECOND, 0);
                         time1 = beginCalendar.getTime();
-                        addStartHour.setText(DateFormat.format("HH:mm", time1));
+                        String convertedTime1 = (String) DateFormat.format("HH:mm", time1);
+                        addStartHour.setText(convertedTime1);
                     }
                 }, mHour, mMinute, true);
                 timePickerDialog.show();
@@ -154,7 +164,8 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
                         endCalendar.set(MINUTE, minute);
                         endCalendar.set(SECOND, 0);
                         time2 = endCalendar.getTime();
-                        addEndHour.setText(DateFormat.format("HH:mm", time2));
+                        String convertedTime2 = (String) DateFormat.format("HH:mm", time2);
+                        addEndHour.setText(convertedTime2);
                     }
                 }, mHour, mMinute, true);
                 timePickerDialog.show();
@@ -174,7 +185,7 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
                 DatePickerDialog datePickerDialog = new DatePickerDialog(AddMeetingActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        date = dayOfMonth + "/" + month + "/" + year;
+                        date = dayOfMonth + "/" + (month + 1) + "/" + year;
                         addDate.setText(date);
                     }
                 }, mYear, mMonth, mDay);
@@ -189,18 +200,9 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
         addRoom.setOnItemSelectedListener(this);
     }
 
-    private void setAddMail() {
-        addMail.setOnItemSelectedListener(this);
-    }
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (parent.getId() == addRoom.getId()) {
-            room = (String) addRoom.getSelectedItem();
-        } else {
-            mail = (String) addMail.getSelectedItem();
-        }
-        Toast.makeText(this, parent.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+        room = (String) addRoom.getSelectedItem();
     }
 
     @Override
@@ -211,27 +213,48 @@ public class AddMeetingActivity extends AppCompatActivity implements AdapterView
         addMailBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addMailView();
+                mailAllow();
+                mailIsOK();
             }
         });
     }
 
-    private void addMailView() {
-    }
+    private void mailAllow() {
+        for (int i = 0; i < mailList.size(); i++) {
+            String newMail = addMail.getText().toString() + "@lamezone.com";
+            String existingMail = mailList.get(i);
 
-    public void availability() {
-        for (int i = 0; i < mApiService.getMeetings().size(); i++) {
-            long newStart = meeting.getStartTime().getTime();
-            long newEnd = meeting.getEndTime().getTime();
-            long existingStart = mApiService.getMeetings().get(i).getStartTime().getTime();
-            long existingEnd = mApiService.getMeetings().get(i).getEndTime().getTime();
-
-            if (room.equals(mApiService.getMeetings().get(i).getRoom()) && date.equals(mApiService.getMeetings().get(i).getDate())) {
-                if (newStart >= existingStart && newStart <= existingEnd || newEnd >= existingStart && newEnd <= existingEnd) {
-                    meeting.setAvailable(false);
-                    Toast.makeText(AddMeetingActivity.this, "Salle déja occupée pour cet horaire", Toast.LENGTH_LONG).show();
-                }
+            if (newMail.equals(existingMail)) {
+                mailIsExisting = true;
             }
         }
     }
+
+    private void mailIsOK(){
+        if (addMail.getText().toString().equals("")) {
+            Toast.makeText(AddMeetingActivity.this, "Veuillez insérer un mail", Toast.LENGTH_SHORT).show();
+        } else {
+            if (mailIsExisting) {
+                Toast.makeText(AddMeetingActivity.this, "Mail déja saisi", Toast.LENGTH_SHORT).show();
+                addMail.getText().clear();
+                mailIsExisting = false;
+            } else {
+                addMailView();
+            }
+        }
+    }
+
+    private void addMailView() {
+        mailItem = addMail.getText().toString() + "@lamezone.com";
+        mailList.add(mailItem);
+        addMail.getText().clear();
+        mailAdapter.notifyDataSetChanged();
+    }
+
+    private void initListMail() {
+        mailList = new ArrayList<>();
+        mailAdapter = new MailRecyclerViewAdapter(mailList);
+        mailRW.setAdapter(mailAdapter);
+    }
 }
+

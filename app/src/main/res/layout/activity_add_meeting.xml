@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <ImageButton
@@ -50,8 +56,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginEnd="25dp"
         android:layout_marginHorizontal="5dp"
-        android:layout_marginVertical="10dp">
+        android:layout_marginVertical="10dp"
+        android:layout_weight="3">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -59,26 +67,41 @@
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_baseline_account_circle_24" />
 
-        <Spinner
-            android:id="@+id/mail_spinner"
+        <EditText
+            android:id="@+id/mail_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_gravity="center_vertical"
             android:paddingVertical="6dp"
-            android:entries="@array/mail_spinner" />
+            android:paddingHorizontal="20dp"
+            android:layout_weight="3"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/mail_end"
+            android:layout_marginHorizontal="10dp"
+            />
 
         <ImageButton
             android:id="@+id/add_mail_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_add_24"
-            android:backgroundTint="@android:color/background_dark"/>
+            android:backgroundTint="@android:color/background_dark" />
     </LinearLayout>
 
-    <FrameLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_mail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        app:layoutManager="LinearLayoutManager"
+        tools:context=".AddMeetingActivity"
+        tools:listitem="@layout/fragment_mail"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -166,3 +189,5 @@
             android:layout_marginStart="10dp"/>
     </LinearLayout>
 </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

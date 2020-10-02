@@ -2,8 +2,11 @@ package com.example.mareu.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.format.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Meeting implements Parcelable {
 
@@ -12,20 +15,19 @@ public class Meeting implements Parcelable {
     private Date endTime;
     private String date;
     private String room;
-    private String mail;
+    private List<String> mail;
     private Boolean Available = true;
 
     public Meeting() {
     }
 
-    public Meeting(String topic, Date startTime, Date endTime, String date, String room, String mail, Boolean available) {
+    public Meeting(String topic, Date startTime,Date endTime, String date, String room, List<String> mail) {
         this.topic = topic;
         this.startTime = startTime;
         this.endTime = endTime;
         this.date = date;
         this.room = room;
         this.mail = mail;
-        Available = available;
     }
 
     public Date getStartTime() {
@@ -42,6 +44,14 @@ public class Meeting implements Parcelable {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public String getConvertStartTime() {
+        return (String) DateFormat.format("HH:mm", startTime);
+    }
+
+    public String getConvertEndTime() {
+      return (String) DateFormat.format("HH:mm", endTime);
     }
 
     public String getDate() {
@@ -68,11 +78,11 @@ public class Meeting implements Parcelable {
         this.topic = topic;
     }
 
-    public String getMail() {
+    public List<String> getMail() {
         return mail;
     }
 
-    public void setMail(String mail) {
+    public void setMail(List<String> mail) {
         this.mail = mail;
     }
 
@@ -92,18 +102,22 @@ public class Meeting implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(topic);
+        parcel.writeSerializable(startTime);
+        parcel.writeSerializable(endTime);
         parcel.writeString(date);
         parcel.writeString(room);
-        parcel.writeString(mail);
-        parcel.writeString(String.valueOf(Available));
+        parcel.writeStringList(mail);
     }
 
     protected Meeting(Parcel in) {
         topic = in.readString();
+        startTime = (Date) in.readSerializable();
+        endTime = (Date) in.readSerializable();
         date = in.readString();
         room = in.readString();
-        mail = in.readString();
-        Available = Boolean.valueOf(in.readString());
+        mail = new ArrayList<>();
+        in.readStringList(mail);
+
     }
 
     public static final Creator<Meeting> CREATOR = new Creator<Meeting>() {

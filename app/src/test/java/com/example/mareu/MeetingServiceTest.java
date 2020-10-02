@@ -12,6 +12,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -27,6 +30,17 @@ public class MeetingServiceTest {
 
     private ApiService service;
 
+    public static List<String> mail = new ArrayList<String>(){
+        {
+            add("luca@lamezone.com");
+        }
+    };
+
+    private static final Date startHours = new Date(2020,1,1,12,0,0);
+    private static final Date endHours = new Date(2020,1,1,14,0,0);
+
+    Meeting meeting = new Meeting("Réunion Test",startHours,endHours,"1/1/2020","Salle 1",mail);
+
     @Before
     public void setup(){service = DI.getNewInstanceApiService();}
 
@@ -39,19 +53,34 @@ public class MeetingServiceTest {
 
     @Test
     public void addMeetingWithSuccess(){
-        Meeting meetingToCreate = new Meeting();
-        service.addMeeting(meetingToCreate);
-        assertTrue(service.getMeetings().contains(meetingToCreate));
+        service.addMeeting(meeting);
+        assertTrue(service.getMeetings().contains(meeting));
     }
 
     @Test
     public void deleteMeetingWithSuccess(){
-        Meeting meetingToDelete = service.getMeetings().get(0);
-        service.deleteMeeting(meetingToDelete);
-        assertFalse(service.getMeetings().contains(meetingToDelete));
+        service.addMeeting(meeting);
+        service.deleteMeeting(meeting);
+        assertFalse(service.getMeetings().contains(meeting));
     }
 
     @Test
-    public void MeetingIsFilterWithSuccess(){
+    public void meetingIsFilterByDateWithSuccess(){
+        service.addMeeting(meeting);
+        assertTrue(service.getMeetingsFilteredByDate("1/1/2020").contains(meeting));
+        assertFalse(service.getMeetingsFilteredByDate("2/1/2020").contains(meeting));
+    }
+
+    @Test
+    public void meetingIsFilterByRoomWithSuccess(){
+        service.addMeeting(meeting);
+        assertTrue(service.getMeetingsFilteredByRoom("Salle 1").contains(meeting));
+        assertFalse(service.getMeetingsFilteredByRoom("Salle 2").contains(meeting));
+    }
+
+    @Test
+    public void availabilityTest(){
+        service.meetingAvailability(meeting);
+        assertFalse(meeting.isAvailable());
     }
 }
