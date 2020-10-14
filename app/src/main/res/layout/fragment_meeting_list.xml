@@ -8,6 +8,6 @@
     android:layout_height="match_parent"
     android:layout_marginHorizontal="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".ListMeetingActivity"
+    tools:context=".Controler.Activity.ListMeetingActivity"
     tools:listitem="@layout/fragment_meeting"
 />

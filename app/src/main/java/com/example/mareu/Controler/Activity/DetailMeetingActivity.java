@@ -1,11 +1,13 @@
-package com.example.mareu;
+package com.example.mareu.Controler.Activity;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.mareu.model.Meeting;
+import com.example.mareu.Controler.RecyclerView.DetailRecyclerViewAdapter;
+import com.example.mareu.Model.Meeting;
+import com.example.mareu.R;
 
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class DetailMeetingActivity extends AppCompatActivity {
         setbReturn();
     }
 
-    private void findview(){
+    private void findview() {
         topic = findViewById(R.id.detail_topic_text);
         participants = findViewById(R.id.detail_mail_list);
         date = findViewById(R.id.date_text);
@@ -43,24 +45,24 @@ public class DetailMeetingActivity extends AppCompatActivity {
         bReturn = findViewById(R.id.back_btn);
     }
 
-    private void getMeeting(){
+    private void getMeeting() {
         mMeeting = getIntent().getParcelableExtra("Meeting");
     }
 
-    private void meetingInformations(){
+    private void meetingInformations() {
         topic.setText(mMeeting.getTopic());
         date.setText(mMeeting.getDate() + " " + mMeeting.getConvertStartTime() + "-" + mMeeting.getConvertEndTime());
         room.setText(mMeeting.getRoom());
         setDetailAdapter();
     }
 
-    private void setDetailAdapter(){
+    private void setDetailAdapter() {
         detailMailList = mMeeting.getMail();
         detailAdapter = new DetailRecyclerViewAdapter(detailMailList);
         participants.setAdapter(detailAdapter);
     }
 
-    private void setbReturn(){
+    private void setbReturn() {
         bReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

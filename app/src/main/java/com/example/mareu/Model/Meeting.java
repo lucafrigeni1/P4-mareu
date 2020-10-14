@@ -1,4 +1,4 @@
-package com.example.mareu.model;
+package com.example.mareu.Model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -71,7 +71,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/date_text"
         android:layout_marginTop="30dp"
-        tools:context=".DetailMeetingActivity"
+        tools:context=".Controler.Activity.DetailMeetingActivity"
         tools:listitem="@layout/fragment_detail_mail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

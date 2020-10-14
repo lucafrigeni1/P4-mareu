@@ -9,14 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ListMeetingActivity">
+        <activity android:name=".Controler.Activity.ListMeetingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddMeetingActivity"/>
-        <activity android:name=".DetailMeetingActivity"/>
+        <activity android:name=".Controler.Activity.AddMeetingActivity"/>
+        <activity android:name=".Controler.Activity.DetailMeetingActivity"/>
     </application>
 </manifest>

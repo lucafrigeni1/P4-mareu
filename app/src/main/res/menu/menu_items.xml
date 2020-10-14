@@ -42,4 +42,8 @@
             </item>
         </menu>
     </item>
+
+    <item
+        android:id="@+id/initial_filter"
+        android:title="@string/Réinitialiser"/>
 </menu>

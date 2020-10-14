@@ -2,7 +2,6 @@
     <string name="app_name">Mareu</string>
     <string name="add_meeting_title">CREATION D\'UNE NOUVELLE REUNION</string>
     <string name="sujet_hint">Sujet de la réunion</string>
-    <string name="mail_hint">prénom.nom</string>
     <string name="mail_end">\@lamezone.com</string>
     <string name="horaire_start_text">Début de la réunion</string>
     <string name="horaire_end_text">Fin de la réunion</string>
@@ -12,6 +11,14 @@
     <string name="Date">Date</string>
     <string name="filtrer_par_date">filtrer par date</string>
     <string name="filtrer_par_salle">filtrer par salle</string>
+    <string name="Réinitialiser">Réinitialiser les filtres</string>
+    <string name="wrong_hours_selected">Horaires incorrect</string>
+    <string name="empty_fields">Veuillez remplir tous les champs</string>
+    <string name="empty_mail">Veuillez insérer un mail</string>
+    <string name="existing_mail">Mail déja saisi</string>
+    <string name="room_unavailable">Salle indisponible</string>
+    <string name="digits">abcdefghijklmonpqrstuvwxyz0123456789.-\'</string>
+
     <string name="salle_1">Salle 1</string>
     <string name="salle_2">Salle 2</string>
     <string name="salle_3">Salle 3</string>
@@ -22,12 +29,17 @@
     <string name="salle_8">Salle 8</string>
     <string name="salle_9">Salle 9</string>
     <string name="salle_10">Salle 10</string>
-    <string-array name="mail_spinner">
-        <item>Séléctionner un mail</item>
-        <item>Maxime@lamezone.com</item>
-        <item>Jean@lamezone.com</item>
-        <item>Elise@lamezone.com</item>
-        <item>Lucie@lamezone.com</item>
-        <item>Eric@lamezone.com</item>
+
+    <string-array name="room_array">
+        <item>@string/salle_1</item>
+        <item>@string/salle_2</item>
+        <item>@string/salle_3</item>
+        <item>@string/salle_4</item>
+        <item>@string/salle_5</item>
+        <item>@string/salle_6</item>
+        <item>@string/salle_7</item>
+        <item>@string/salle_8</item>
+        <item>@string/salle_9</item>
+        <item>@string/salle_10</item>
     </string-array>
 </resources>

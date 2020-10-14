@@ -1,6 +1,6 @@
-package com.example.mareu.service;
+package com.example.mareu.Controler.service;
 
-import com.example.mareu.model.Meeting;
+import com.example.mareu.Model.Meeting;
 
 import java.util.List;
 
@@ -18,5 +18,4 @@ public interface ApiService {
 
     List<Meeting> getMeetingsFilteredByRoom(String room);
 
-    String[]getRooms();
 }

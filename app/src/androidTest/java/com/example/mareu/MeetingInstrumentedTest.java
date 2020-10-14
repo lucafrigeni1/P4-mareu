@@ -1,18 +1,18 @@
 package com.example.mareu;
 
 
-import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import com.example.mareu.Controler.Activity.ListMeetingActivity;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,12 +27,9 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.removeGlobalAssertion;
 import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
@@ -51,11 +48,16 @@ public class MeetingInstrumentedTest {
 
     @Before
     public void setUp(){
-        onView(withId(R.id.list_meetings));
-        ViewInteraction appCompatImageButton3 = onView(allOf(withId(R.id.delete_button),
-                childAtPosition(allOf(withId(R.id.fragment_layout),
-                        childAtPosition(withId(R.id.list_meetings), 0)), 9), isDisplayed()));
-        appCompatImageButton3.perform(click());
+        ViewInteraction appCompatImageButton = onView(
+                allOf(withId(R.id.delete_button),
+                        childAtPosition(
+                                allOf(withId(R.id.fragment_layout),
+                                        childAtPosition(
+                                                withId(R.id.list_meetings),
+                                                0)),
+                                10),
+                        isDisplayed()));
+        appCompatImageButton.perform(click());
         onView(withId(R.id.add_metting_button)).perform(click());
         onView((withId(R.id.topic_edit))).perform(replaceText("Réunion Test"), closeSoftKeyboard());
         onView(withId(R.id.mail_edit)).perform(replaceText("Luca"), closeSoftKeyboard());
@@ -106,19 +108,25 @@ public class MeetingInstrumentedTest {
         onView(withText("Salle 2")).perform(click());
         onView((withId(R.id.valid_button))).perform(click());
         onView(withId(R.id.list_meetings));
-        ViewInteraction appCompatImageButton3 = onView(allOf(withId(R.id.delete_button),
-                childAtPosition(allOf(withId(R.id.fragment_layout),
-                        childAtPosition(withId(R.id.list_meetings), 0)), 9), isDisplayed()));
-        appCompatImageButton3.perform(click());
+        ViewInteraction appCompatImageButton = onView(
+                allOf(withId(R.id.delete_button),
+                        childAtPosition(
+                                allOf(withId(R.id.fragment_layout),
+                                        childAtPosition(
+                                                withId(R.id.list_meetings),
+                                                0)),
+                                10),
+                        isDisplayed()));
+        appCompatImageButton.perform(click());
     }
 
     @Test
     public void filterByDateMeetingTest() {
-        onView(withContentDescription("More options")).perform(click());
+        onView(withContentDescription("Plus d'options")).perform(click());
         onView(withText("filtrer par date")).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 10, 2));
         onView((withText(android.R.string.ok))).perform(click());
-        onView(withContentDescription("More options")).perform(click());
+        onView(withContentDescription("Plus d'options")).perform(click());
         onView(withText("filtrer par date")).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 10, 1));
         onView((withText(android.R.string.ok))).perform(click());
@@ -127,10 +135,10 @@ public class MeetingInstrumentedTest {
 
     @Test
     public void filterByRoomMeetingTest() {
-        onView(withContentDescription("More options")).perform(click());
+        onView(withContentDescription("Plus d'options")).perform(click());
         onView(withText("filtrer par salle")).perform(click());
         onView(withText("Salle 2")).perform(click());
-        onView(withContentDescription("More options")).perform(click());
+        onView(withContentDescription("Plus d'options")).perform(click());
         onView(withText("filtrer par salle")).perform(click());
         onView(withText("Salle 1")).perform(click());
         onView(withText("Réunion Test")).check(matches(isDisplayed()));

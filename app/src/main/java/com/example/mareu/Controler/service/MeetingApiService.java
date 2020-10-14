@@ -1,8 +1,8 @@
-package com.example.mareu.service;
+package com.example.mareu.Controler.service;
 
 import android.util.Log;
 
-import com.example.mareu.model.Meeting;
+import com.example.mareu.Model.Meeting;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,7 +35,6 @@ public class MeetingApiService implements ApiService{
             Date newEnd = meeting.getEndTime();
             Date existingStart = getMeetings().get(i).getStartTime();
             Date existingEnd = getMeetings().get(i).getEndTime();
-
             if (meeting.getRoom().equals(getMeetings().get(i).getRoom())
                     && meeting.getDate().equals(getMeetings().get(i).getDate())) {
                 if (newStart.after(existingStart)  && newStart.before(existingEnd)
@@ -49,10 +48,6 @@ public class MeetingApiService implements ApiService{
             }
         }
     }
-
-    private String[] rooms = RoomGenerator.generateRoomList();
-
-    public String[]getRooms(){return rooms;}
 
     @Override
     public List<Meeting> getMeetingsFilteredByDate(String date) {

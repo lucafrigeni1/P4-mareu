@@ -1,10 +1,12 @@
-package com.example.mareu;
+package com.example.mareu.Controler.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.example.mareu.R;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.mareu;
+package com.example.mareu.Controler.Activity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -9,9 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 
-import com.example.mareu.DI.DI;
-import com.example.mareu.model.Meeting;
-import com.example.mareu.service.ApiService;
+import com.example.mareu.Controler.DI.DI;
+import com.example.mareu.Controler.RecyclerView.MeetingFragment;
+import com.example.mareu.R;
+import com.example.mareu.Model.Meeting;
+import com.example.mareu.Controler.service.ApiService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
@@ -40,7 +42,7 @@ public class ListMeetingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_meeting);
-        mApiService = DI.getApiService();
+        mApiService = DI.getNewInstanceApiService();
 
         findview();
         setUpToolbar();
@@ -88,6 +90,9 @@ public class ListMeetingActivity extends AppCompatActivity {
             String roomToFilter = item.getTitle().toString();
             List<Meeting> filteredRoomList = mApiService.getMeetingsFilteredByRoom(roomToFilter);
             meetingFragment.setFilteredList(filteredRoomList);
+        } else if (item.getItemId() == R.id.initial_filter){
+            List<Meeting> initialList = mApiService.getMeetings();
+            meetingFragment.setFilteredList(initialList);
         }
         return super.onOptionsItemSelected(item);
     }

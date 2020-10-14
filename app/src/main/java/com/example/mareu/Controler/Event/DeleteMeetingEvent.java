@@ -1,6 +1,6 @@
-package com.example.mareu.Event;
+package com.example.mareu.Controler.Event;
 
-import com.example.mareu.model.Meeting;
+import com.example.mareu.Model.Meeting;
 
 public class DeleteMeetingEvent {
 

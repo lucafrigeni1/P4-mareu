@@ -1,16 +1,16 @@
-package com.example.mareu;
+package com.example.mareu.Controler.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.mareu.DI.DI;
-import com.example.mareu.Event.DeleteMeetingEvent;
-import com.example.mareu.model.Meeting;
-import com.example.mareu.service.ApiService;
+import com.example.mareu.Controler.DI.DI;
+import com.example.mareu.Controler.Event.DeleteMeetingEvent;
+import com.example.mareu.R;
+import com.example.mareu.Model.Meeting;
+import com.example.mareu.Controler.service.ApiService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -18,7 +18,6 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.List;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,18 +44,17 @@ public class MeetingFragment extends Fragment {
         Context context = view.getContext();
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         return view;
     }
 
     private void initList() {
         mMeeting = mApiService.getMeetings();
-        mRecyclerView.setAdapter(new MeetingRecyclerViewAdapter(mMeeting));
+        mRecyclerView.setAdapter(new MeetingRecyclerViewAdapter(mMeeting, this.getContext()));
     }
 
     public void setFilteredList(List<Meeting> filteredList){
         mMeeting = filteredList;
-        mRecyclerView.setAdapter(new MeetingRecyclerViewAdapter(mMeeting));
+        mRecyclerView.setAdapter(new MeetingRecyclerViewAdapter(mMeeting, this.getContext()));
     }
 
     @Override

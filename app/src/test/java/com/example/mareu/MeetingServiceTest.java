@@ -1,10 +1,9 @@
 package com.example.mareu;
 
-import com.example.mareu.DI.DI;
-import com.example.mareu.model.Meeting;
-import com.example.mareu.service.ApiService;
-import com.example.mareu.service.MeetingApiService;
-import com.example.mareu.service.MeetingGenerator;
+import com.example.mareu.Controler.DI.DI;
+import com.example.mareu.Model.Meeting;
+import com.example.mareu.Controler.service.ApiService;
+import com.example.mareu.Controler.service.MeetingGenerator;
 
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Before;
@@ -13,7 +12,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 

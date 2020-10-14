@@ -2,5 +2,13 @@
 <resources>
     <color name="colorPrimaryDark">#2C7ABD</color>
     <color name="colorPrimary">#F70F0F0F</color>
-    <color name="colorText">#FE4803</color>
+    <color name="blueCircle">#313ea3</color>
+    <color name="brownCircle">#a36e31</color>
+    <color name="greenCircle">#31a35f</color>
+    <color name="greyCircle">#807a7a</color>
+    <color name="orangeCircle">#ffa600</color>
+    <color name="pinkCircle">#c42359</color>
+    <color name="purpleCircle">#821a99</color>
+    <color name="redCircle">#9e0909</color>
+    <color name="yellowCircle">#ffe600</color>
 </resources>
