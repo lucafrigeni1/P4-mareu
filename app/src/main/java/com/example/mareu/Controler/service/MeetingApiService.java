@@ -1,7 +1,5 @@
 package com.example.mareu.Controler.service;
 
-import android.util.Log;
-
 import com.example.mareu.Model.Meeting;
 
 import java.util.ArrayList;

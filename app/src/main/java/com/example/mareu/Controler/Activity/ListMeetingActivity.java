@@ -91,8 +91,7 @@ public class ListMeetingActivity extends AppCompatActivity {
             List<Meeting> filteredRoomList = mApiService.getMeetingsFilteredByRoom(roomToFilter);
             meetingFragment.setFilteredList(filteredRoomList);
         } else if (item.getItemId() == R.id.initial_filter){
-            List<Meeting> initialList = mApiService.getMeetings();
-            meetingFragment.setFilteredList(initialList);
+            meetingFragment.setFilteredList(mApiService.getMeetings());
         }
         return super.onOptionsItemSelected(item);
     }

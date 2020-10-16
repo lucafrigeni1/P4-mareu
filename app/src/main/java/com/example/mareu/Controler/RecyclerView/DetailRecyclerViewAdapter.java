@@ -29,8 +29,6 @@ public class DetailRecyclerViewAdapter extends RecyclerView.Adapter<DetailRecycl
     @Override
     public void onBindViewHolder(final DetailRecyclerViewAdapter.ViewHolder holder, int position) {
         final String mail = detailMail.get(position);
-
-        Log.e( "onBindViewHolder: ", mail );
         holder.participantsTv.setText(mail);
     }
 

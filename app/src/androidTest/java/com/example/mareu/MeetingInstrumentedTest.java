@@ -122,11 +122,11 @@ public class MeetingInstrumentedTest {
 
     @Test
     public void filterByDateMeetingTest() {
-        onView(withContentDescription("Plus d'options")).perform(click());
+        onView(withContentDescription("More options")).perform(click());
         onView(withText("filtrer par date")).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 10, 2));
         onView((withText(android.R.string.ok))).perform(click());
-        onView(withContentDescription("Plus d'options")).perform(click());
+        onView(withContentDescription("More options")).perform(click());
         onView(withText("filtrer par date")).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 10, 1));
         onView((withText(android.R.string.ok))).perform(click());
@@ -135,10 +135,10 @@ public class MeetingInstrumentedTest {
 
     @Test
     public void filterByRoomMeetingTest() {
-        onView(withContentDescription("Plus d'options")).perform(click());
+        onView(withContentDescription("More options")).perform(click());
         onView(withText("filtrer par salle")).perform(click());
         onView(withText("Salle 2")).perform(click());
-        onView(withContentDescription("Plus d'options")).perform(click());
+        onView(withContentDescription("More options")).perform(click());
         onView(withText("filtrer par salle")).perform(click());
         onView(withText("Salle 1")).perform(click());
         onView(withText("Réunion Test")).check(matches(isDisplayed()));
